@@ -1,12 +1,12 @@
-import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import './App.css';
+import './Login.css';
 
 // we’re installing Bootstrap for styling,
 //  Axios for making HTTP requests,
 //  and react-router-dom for handling client-side routing.
 
 function Login() {
+  const navigate = useNavigate();
 
   /*const [email, setEmail] = useState()
   const [password, setPassword] = useState()
@@ -22,7 +22,8 @@ function Login() {
         <br/>
         <button type = 'submit' className = 'sbmt' onClick={() => console.log('ff')}>Sign in</button>
         <br/>or<br/>
-        <button >Create Account</button>
+        <button onClick={()=> navigate("/SignUp")}>
+          Create Account</button>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function MainPage() {
+function SignUp() {
   
   return (
     <div>
@@ -9,4 +9,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default SignUp;
