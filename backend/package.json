@@ -6,7 +6,6 @@
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
-  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
