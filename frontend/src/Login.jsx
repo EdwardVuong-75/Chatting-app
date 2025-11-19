@@ -1,4 +1,4 @@
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 // we’re installing Bootstrap for styling,
@@ -17,9 +17,9 @@ function Login() {
       <h1>Welcome</h1>
       <div>
         <input type='text' id = 'myinput' placeholder = "Enter your Email "></input>
-        <br/>
+        <br/><br/>
         <input type='text' id = 'myinput2' placeholder = "Enter your password "></input>
-        <br/>
+        <br/><br/>
         <button type = 'submit' className = 'sbmt' onClick={() => console.log('ff')}>Sign in</button>
         <br/>or<br/>
         <button onClick={()=> navigate("/SignUp")}>
