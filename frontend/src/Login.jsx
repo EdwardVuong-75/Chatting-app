@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './App.css';
 
 // we’re installing Bootstrap for styling,
@@ -8,9 +8,9 @@ import './App.css';
 
 function Login() {
 
-  const [email, setEmail] = useState()
+  /*const [email, setEmail] = useState()
   const [password, setPassword] = useState()
-  const navigate = useNavigate()
+  const navigate = useNavigate()*/
   
   return (
     <div className="App">
@@ -22,7 +22,7 @@ function Login() {
         <br/>
         <button type = 'submit' className = 'sbmt' onClick={() => console.log('ff')}>Sign in</button>
         <br/>or<br/>
-        <button>Create Account</button>
+        <button >Create Account</button>
       </div>
     </div>
   );
