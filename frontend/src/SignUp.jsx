@@ -12,10 +12,15 @@ function SignUp() {
 
     const handeSubmit = (e) => {
       console.log("f")
+      if(!name || !email || !password)
+      {
+        console.log("Fill in the box");
+        return;
+      }
         e.preventDefault()
         axios.post("http://localhost:5000/api/user/SignUp", { name, email, password })
         .then(result => {console.log(result)
-        navigate("/")
+        navigate("/SuccessfullySignUp")
         })
         .catch(err => console.log(err))
     }
