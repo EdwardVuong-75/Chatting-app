@@ -8,12 +8,18 @@ const sign_up =  async (req, res) => {
     {
         return res.status(400).json({error: "Please fill in the box"});
     }
-    const users = User.create({name, email, password });
+    const existingEmail = await User.findOne({email});
+    if (existingEmail)
+    {
+        return res.status(400).json({error: "Email already existed"});
+    }
+
+    const users = await User.create({name, email, password });
     res.json(users);
     }
     catch(err) {
         console.log(err);
-        res.status(400).json({error: err.message});
+        res.status(500).json({error: err.message});
     }
 }
 

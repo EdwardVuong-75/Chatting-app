@@ -30,10 +30,18 @@ function SignUp() {
         return;
       }
         axios.post("http://localhost:5000/api/user/SignUp", { name, email, password })
-        .then(result => {console.log(result);
+        .then(result => {
+          console.log(result);
         navigate("/SuccessfullySignUp");
         })
-        .catch(err => console.log(err))
+        .catch(err =>  {
+    if (err.response.data.error) {
+      setMsg(err.response.data.error);   // show backend error message
+    } else {
+      setMsg("Something went wrong");
+    }
+      });
+
     }
    
   
