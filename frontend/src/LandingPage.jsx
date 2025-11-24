@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function MainPage() {
+function LandingPage() {
   
   return (
     <div>
@@ -9,4 +9,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default LandingPage;

@@ -1,13 +1,11 @@
 const express = require('express');
 const User = require('../models/userModel');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const sign_up =  async (req, res) => {
     try{
     const {name, email, password } = req.body;
-    if (!name || !email || !password)
-    {
-        return res.status(400).json({error: "Please fill in the box"});
-    }
     const existingEmail = await User.findOne({email});
     if (existingEmail)
     {
@@ -23,4 +21,39 @@ const sign_up =  async (req, res) => {
     }
 }
 
-module.exports = sign_up;
+const log_in = async (req,res) => {
+    try {
+        const { email, password } = req.body;
+        const existingEmail = await User.findOne({email});
+
+        if(!existingEmail)
+        {
+            return res.status(401).json({error: "Email or password incorrect"});
+        }
+
+        const isMatch = await bcrypt.compare(password, existingEmail.password);
+
+        if(!isMatch)
+        {
+            return res.status(401).json({error: "Email or password incorrect"});
+        }
+
+        const token = jwt.sign(
+            {
+                id: existingEmail._id,
+            }, process.env.JWT_SECRET,
+            {
+                expiresIn: '1h'
+            }
+        );
+
+        res.json({ token, existingEmail: {
+            id: existingEmail._id,
+            email: existingEmail.email        }
+        });
+    } catch (err) {
+    res.status(500).json({error: err.message});
+    }
+}
+
+module.exports = {sign_up, log_in};
