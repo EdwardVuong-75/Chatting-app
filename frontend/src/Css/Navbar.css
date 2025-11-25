@@ -1,0 +1,40 @@
+.navbar-container {
+  display: flex;
+  align-items: center;
+  background-color: #333;
+  color: white;
+
+  position: fixed;  
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 15px 40px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 230px;
+}
+
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+  padding: 6px 12px;
+  transition: color 0.3s;
+}
+
+.nav-links li a:hover,
+.nav-links li a.active {
+  color: purple;
+}
+
+body {
+  padding-top: 70px;
+}
+
+.msg
+{
+  color: red;
+}
