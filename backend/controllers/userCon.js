@@ -24,14 +24,14 @@ const sign_up =  async (req, res) => {
 const log_in = async (req,res) => {
     try {
         const { email, password } = req.body;
-        const existingEmail = await User.findOne({email});
+        const user = await User.findOne({email});
 
-        if(!existingEmail)
+        if(!user)
         {
             return res.status(401).json({error: "Email or password incorrect"});
         }
 
-        const isMatch = await bcrypt.compare(password, existingEmail.password);
+        const isMatch = await bcrypt.compare(password, user.password);
 
         if(!isMatch)
         {
@@ -40,16 +40,16 @@ const log_in = async (req,res) => {
 
         const token = jwt.sign(
             {
-                id: existingEmail._id,
+                id: user._id,
             }, process.env.JWT_SECRET,
             {
                 expiresIn: '1h'
             }
         );
 
-        res.json({ token, existingEmail: {
-            id: existingEmail._id,
-            email: existingEmail.email        }
+        res.json({ token, user: {
+            id: user._id,
+            email: user.email        }
         });
     } catch (err) {
     res.status(500).json({error: err.message});

@@ -26,6 +26,8 @@ function Login() {
     axios.post("http://localhost:5000/api/user/Login", { email, password })
         .then(result => {
           console.log(result);
+          localStorage.setItem("token", result.data.token);
+
         navigate("/LandingPage");
         })
         .catch(err =>  {
