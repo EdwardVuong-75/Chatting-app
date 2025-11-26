@@ -38,10 +38,28 @@ function Profile() {
         <ul className="nav-links">
           <li>
             <NavLink 
-              to="/about"
+              to="/Chat"
               className={({ isActive }) => isActive ? "active" : ""}
             >
               Chat
+            </NavLink>
+          </li>
+
+           <li>
+            <NavLink 
+              to="/Adding"
+              className={({ isActive }) => isActive ? "active" : ""}
+            >
+              Adding friend
+            </NavLink>
+          </li>
+
+           <li>
+            <NavLink 
+              to="/Notification"
+              className={({ isActive }) => isActive ? "active" : ""}
+            >
+              Notification
             </NavLink>
           </li>
 

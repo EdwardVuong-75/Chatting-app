@@ -3,7 +3,7 @@ import './Css/Navbar.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-function LandingPage() {
+function AddingFriend() {
 
   const [name, setName] = useState('');
 
@@ -83,9 +83,9 @@ function LandingPage() {
         </ul>
       </nav>
     </header>
-    <p>Welcome {name}. Lets connect</p>
+    <p>Welcome {name}</p>
     </div>
   );
 }
 
-export default LandingPage;
+export default AddingFriend;

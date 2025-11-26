@@ -5,6 +5,9 @@ import SignUp from './SignUp'
 import SsignUp from './SuccessfullySignUp'
 import LandingPage from './LandingPage'
 import Profile from './Profile'
+import AddingFriend from './Adding'
+import Chat from './Chat'
+import Notification from './Notification'
 
 function App() {
 
@@ -15,6 +18,9 @@ function App() {
         <Route path= '/SuccessfullySignUp' element={<SsignUp/>}/>
         <Route path= '/LandingPage' element={<LandingPage/>}/>
         <Route path= '/Profile' element={<Profile/>}/>
+        <Route path= '/Adding' element={<AddingFriend/>}/>
+        <Route path= '/Chat' element={<Chat/>}/>
+        <Route path= '/Notification' element={<Notification/>}/>
       </Routes>
   )
 }

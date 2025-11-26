@@ -3,7 +3,7 @@ import './Css/Navbar.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-function LandingPage() {
+function Notification() {
 
   const [name, setName] = useState('');
 
@@ -88,4 +88,4 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+export default Notification;
