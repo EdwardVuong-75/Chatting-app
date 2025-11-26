@@ -1,21 +1,35 @@
 import { NavLink } from 'react-router-dom';
 import './Css/Navbar.css';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 function LandingPage() {
 
-  const getName = (e) => {
-     e.preventDefault()
+  const [name, setName] = useState('');
 
-    axios.get("http://localhost:5000/api/user/:id/LandingPage")
-        .then(result => {
-          console.log(result);
-          localStorage.setItem("token", result.data.token);
-        })
-        .catch(err =>  {
-    
+  useEffect(() => {
+    const fetchName = async () => {
+    const token = localStorage.getItem('token');
+    if(token)
+    {
+      try {
+        const res = await axios.get("http://localhost:5000/api/user/LandingPage",{
+        headers: {
+        'x-auth-token': token
+       }
       });
-  }
+        setName(res.data.name);
+      }catch(err) 
+       {
+    console.log(err);
+      }
+    }
+   
+  };
+   fetchName();
+  }, []);
+
+
 
   return (
     <div>
@@ -51,7 +65,7 @@ function LandingPage() {
         </ul>
       </nav>
     </header>
-    <p>Welcome {getName}</p>
+    <p>Welcome {name}. Lets connect</p>
     </div>
   );
 }
