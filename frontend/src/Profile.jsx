@@ -3,7 +3,7 @@ import './Css/Navbar.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-function LandingPage() {
+function Profile() {
 
   const [name, setName] = useState('');
 
@@ -65,9 +65,10 @@ function LandingPage() {
         </ul>
       </nav>
     </header>
-    <p>Welcome {name}. Lets connect</p>
+    <img className='profile-pic' src = {'./public/profile-pic.jpg'}/>
+    <p className='Username'>{name}</p>
     </div>
   );
 }
 
-export default LandingPage;
+export default Profile;

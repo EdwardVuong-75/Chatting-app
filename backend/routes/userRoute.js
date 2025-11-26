@@ -9,6 +9,6 @@ router.post('/SignUp',sign_up);
 router.post('/Login',log_in);
 
 //Get
-router.get('/LandingPage', protect, displayUsername);
+router.get('/Username', protect, displayUsername);
 
 module.exports = router;
