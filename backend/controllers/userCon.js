@@ -64,4 +64,30 @@ const displayUsername = async (req,res) => {
     }
 }
 
-module.exports = {sign_up, log_in, displayUsername};
+const searchBar = async (req,res) => {
+    try {
+        const currentId = req.user.id;
+        if(!currentId)
+        {
+            return res.status(404).json({error: "User not found"});
+        }
+        const users = await User.find({ _id: {$ne: currentId }}).select("-password");
+
+        res.status(200).json(users);
+
+    } catch (error) {
+        res.status(500).json({error: "Faild to load user name"})
+    }
+}
+
+const addingFriend = async(req,res) => {
+    const request = req.user.id;
+    if(!request)
+    {
+            return res.status(404).json({error: "User not found"});
+        }
+    
+}
+
+module.exports = {sign_up, log_in, displayUsername, searchBar,
+     addingFriend};

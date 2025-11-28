@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react';
 
 function AddingFriend() {
 
-  const [name, setName] = useState('');
+  const [name, setName] = useState([]);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const fetchName = async () => {
@@ -13,12 +14,12 @@ function AddingFriend() {
     if(token)
     {
       try {
-        const res = await axios.get("http://localhost:5000/api/user/Username",{
+        const res = await axios.get("http://localhost:5000/api/user/SearchFriend",{
         headers: {
         'x-auth-token': token
        }
       });
-        setName(res.data.name);
+        setName(res.data);
       }catch(err) 
        {
     console.log(err);
@@ -29,6 +30,11 @@ function AddingFriend() {
    fetchName();
   }, []);
 
+
+  const searchUser = name.filter(u => 
+    u.name.toLowerCase().includes(search.toLowerCase()) ||
+    u.email.toLowerCase().includes(search.toLowerCase())
+  );
 
 
   return (
@@ -83,7 +89,28 @@ function AddingFriend() {
         </ul>
       </nav>
     </header>
-    <p>Welcome {name}</p>
+     <input
+        type="text"
+        placeholder="Search friends..."
+        className="Searchbar"
+        value = {search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+
+      <p>{searchUser.length} user/users</p>
+
+      {searchUser.length === 0 ? (
+        <p>No other users found.</p>
+      ) : (
+        <p>
+          {searchUser.map(u => (
+            <p className='userCard' key={u._id}>{u.name} ({u.email})
+            <button className='adding-butt'
+            onClick={() => console.log('f')}
+            >Add</button>
+            </p>
+          ))}
+        </p>)}
     </div>
   );
 }
