@@ -2,6 +2,7 @@ const express = require('express');
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const Notification = require('../models/requestModel');
 
 const sign_up =  async (req, res) => {
     try{
@@ -81,11 +82,27 @@ const searchBar = async (req,res) => {
 }
 
 const addingFriend = async(req,res) => {
-    const request = req.user.id;
-    if(!request)
+    try {
+    const sender = req.user.id;
+    const receiver = req.body.receiverId;
+
+    if(!sender)
     {
             return res.status(404).json({error: "User not found"});
         }
+
+    const request = new Notification({
+        receiver: receiver,
+        sender: sender,
+        message: "Friend request sent successfully",
+        type: "Friend request"
+    });
+
+    await request.save();
+    res.status(200).json({ message: 'Request sent successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  } 
     
 }
 

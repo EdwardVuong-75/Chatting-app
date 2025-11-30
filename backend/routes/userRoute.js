@@ -7,7 +7,7 @@ const router = express.Router();
 //Post
 router.post('/SignUp',sign_up);
 router.post('/Login',log_in);
-router.post('AddingFriend',protect, addingFriend);
+router.post('/AddingFriend',protect, addingFriend);
 
 //Get
 router.get('/Username', protect, displayUsername);

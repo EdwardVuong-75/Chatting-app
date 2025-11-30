@@ -7,7 +7,10 @@ function AddingFriend() {
 
   const [name, setName] = useState([]);
   const [search, setSearch] = useState('');
+  const [msg, setMsg] = useState('');
+  const [add, setAdd] = useState('');
 
+  //displaying people in adding friend page
   useEffect(() => {
     const fetchName = async () => {
     const token = localStorage.getItem('token');
@@ -30,11 +33,38 @@ function AddingFriend() {
    fetchName();
   }, []);
 
-
+  //Search friends
   const searchUser = name.filter(u => 
     u.name.toLowerCase().includes(search.toLowerCase()) ||
     u.email.toLowerCase().includes(search.toLowerCase())
   );
+
+  //Send friend request
+  const handleSubmit = async(receiverId) => {
+    try {
+    const token = localStorage.getItem('token');
+    const res = await axios.post("http://localhost:5000/api/user/AddingFriend",
+      {receiverId},
+      {
+        headers: {
+        'x-auth-token': token
+       }
+      })
+
+      setAdd(prev => [...prev, receiverId])
+
+       console.log("sent")
+        setMsg(res.data.message);
+      }
+      
+        catch(err)  {
+    if (err.response.data.error) {
+      setMsg(err.response.data.error);   // show backend error message
+    } else {
+      setMsg("Something went wrong");
+    }
+      };
+  }
 
 
   return (
@@ -98,19 +128,21 @@ function AddingFriend() {
       />
 
       <p>{searchUser.length} user/users</p>
+      <p>{msg}</p>
 
       {searchUser.length === 0 ? (
         <p>No other users found.</p>
       ) : (
-        <p>
+        <div>
           {searchUser.map(u => (
             <p className='userCard' key={u._id}>{u.name} ({u.email})
             <button className='adding-butt'
-            onClick={() => console.log('f')}
-            >Add</button>
+            onClick={() => handleSubmit(u._id)}
+            disabled = {add.includes(u._id)}
+            >{add.includes(u._id) ? 'Request sent' : 'Add'}</button>
             </p>
           ))}
-        </p>)}
+        </div>)}
     </div>
   );
 }
