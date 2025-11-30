@@ -8,7 +8,7 @@ function AddingFriend() {
   const [name, setName] = useState([]);
   const [search, setSearch] = useState('');
   const [msg, setMsg] = useState('');
-  const [add, setAdd] = useState('');
+  const [add, setAdd] = useState([]);
 
   //displaying people in adding friend page
   useEffect(() => {
@@ -22,7 +22,14 @@ function AddingFriend() {
         'x-auth-token': token
        }
       });
+
+      const sentRes = await axios.get("http://localhost:5000/api/user/SentRequest",{
+        headers: {
+        'x-auth-token': token
+       }
+      });
         setName(res.data);
+        setAdd(sentRes.data.map(r => r.receiver))
       }catch(err) 
        {
     console.log(err);

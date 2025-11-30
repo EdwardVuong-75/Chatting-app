@@ -83,6 +83,7 @@ function Notification() {
         </ul>
       </nav>
     </header>
+    <p>You have {notification.length} notifications</p>
     {notification.length === 0 ? (<p>No request</p>) : (
       <div>
         {notification.map(req => (

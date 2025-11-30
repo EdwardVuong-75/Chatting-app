@@ -1,6 +1,7 @@
 const express = require('express');
 const protect = require('../middleware/authMiddleware');
-const {sign_up, log_in, displayUsername, searchBar, addingFriend, getRequest} = require('../controllers/userCon')
+const {sign_up, log_in, displayUsername, searchBar, addingFriend, getRequest, 
+    getSentRequests, rejectRequest} = require('../controllers/userCon')
 
 const router = express.Router();
 
@@ -13,5 +14,9 @@ router.post('/AddingFriend',protect, addingFriend);
 router.get('/Username', protect, displayUsername);
 router.get('/SearchFriend', protect, searchBar);
 router.get('/GetRequest', protect, getRequest);
+router.get('/SentRequest', protect, getSentRequests);
+
+//Delete
+router.delete('/rejectRequest', protect, rejectRequest);
 
 module.exports = router;

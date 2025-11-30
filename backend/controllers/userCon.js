@@ -126,5 +126,24 @@ const getRequest = async(req, res) => {
     }
 }
 
+const getSentRequests = async (req, res) => {
+  try {
+    const senderId = req.user.id;
+
+    const requests = await Notification.find({
+      sender: senderId,
+      status: "pending"
+    });
+
+    res.status(200).json(requests);
+  } catch (error) {
+    res.status(500).json({ error: "Could not load sent requests" });
+  }
+}
+
+const rejectRequest = async(req, res) => {
+
+}
+
 module.exports = {sign_up, log_in, displayUsername, searchBar,
-     addingFriend, getRequest};
+     addingFriend, getRequest, getSentRequests, rejectRequest};
