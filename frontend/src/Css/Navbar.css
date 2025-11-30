@@ -74,3 +74,13 @@ body {
   width: 100px; 
   margin-left:200px
 }
+
+.accept-butt{
+  height: 30px;
+  width: 100px;
+}
+
+.reject-butt{
+  height: 30px;
+  width: 100px;
+}

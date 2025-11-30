@@ -86,7 +86,11 @@ function Notification() {
     {notification.length === 0 ? (<p>No request</p>) : (
       <div>
         {notification.map(req => (
-          <p key={req._id}>{req.sender.name} ({req.sender.email})</p>
+          <p className='userCard' key={req._id}>{req.sender.name} ({req.sender.email})
+          <button className='accept-butt'> Accept
+            </button>
+            <button className='reject-butt'>Reject 
+              </button></p>
         ))}
         </div>)}
     </div>
