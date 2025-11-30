@@ -5,20 +5,20 @@ import { useEffect, useState } from 'react';
 
 function Notification() {
 
-  const [name, setName] = useState('');
+  const [notification, setNotification] = useState([]);
 
   useEffect(() => {
-    const fetchName = async () => {
+    const fetchNotification = async () => {
     const token = localStorage.getItem('token');
     if(token)
     {
       try {
-        const res = await axios.get("http://localhost:5000/api/user/Username",{
+        const res = await axios.get("http://localhost:5000/api/user/GetRequest",{
         headers: {
         'x-auth-token': token
        }
       });
-        setName(res.data.name);
+        setNotification(res.data);
       }catch(err) 
        {
     console.log(err);
@@ -26,7 +26,7 @@ function Notification() {
     }
    
   };
-   fetchName();
+   fetchNotification();
   }, []);
 
 
@@ -83,7 +83,12 @@ function Notification() {
         </ul>
       </nav>
     </header>
-    <p>Welcome {name}. Lets connect</p>
+    {notification.length === 0 ? (<p>No request</p>) : (
+      <div>
+        {notification.map(req => (
+          <p key={req._id}>{req.sender.name} ({req.sender.email})</p>
+        ))}
+        </div>)}
     </div>
   );
 }

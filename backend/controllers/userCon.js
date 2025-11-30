@@ -85,7 +85,7 @@ const addingFriend = async(req,res) => {
     try {
     const sender = req.user.id;
     const receiver = req.body.receiverId;
-
+    
     if(!sender)
     {
             return res.status(404).json({error: "User not found"});
@@ -95,7 +95,8 @@ const addingFriend = async(req,res) => {
         receiver: receiver,
         sender: sender,
         message: "Friend request sent successfully",
-        type: "Friend request"
+        type: "Friend request",
+        status: "pending"
     });
 
     await request.save();
@@ -106,5 +107,24 @@ const addingFriend = async(req,res) => {
     
 }
 
+const getRequest = async(req, res) => {
+    try 
+    {
+        const noti = req.user.id
+        const resquests = await Notification.find({
+            receiver: noti,
+            status: "pending"
+        }).populate("sender", "name email");
+
+        if(!noti)
+        {
+            res.status(401).json({message: "No request"});
+        }
+        res.status(200).json(resquests)
+    } catch (error) {
+        res.status(500).json({error: "Something went wrong"})
+    }
+}
+
 module.exports = {sign_up, log_in, displayUsername, searchBar,
-     addingFriend};
+     addingFriend, getRequest};
