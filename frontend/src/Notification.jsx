@@ -52,6 +52,28 @@ function Notification() {
 
   };
 
+  const acceptReq = async(requestId) => {
+    const token = localStorage.getItem('token')
+    if(token)
+    {
+      try {
+        await axios.post("http://localhost:5000/api/user/AcceptRequest",
+            {requestId},
+            {
+              headers: {'x-auth-token': token}
+            }
+          
+        );
+        setNotification((prev) => prev.filter((req) => req._id !== requestId));
+        console.log("accepted");
+      } catch (error) {
+
+        console.log(error);
+      }
+    }
+
+  };
+
 
   return (
     <div>
@@ -110,7 +132,9 @@ function Notification() {
       <div>
         {notification.map(req => (
           <div className='userCard' key={req._id}>{req.sender.name} ({req.sender.email})
-          <button className='accept-butt'> Accept
+          <button className='accept-butt'
+          onClick={() => acceptReq(req._id)}
+          > Accept
             </button>
             <button className='reject-butt'
             onClick={() => rejectRequest(req._id)}

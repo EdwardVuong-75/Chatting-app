@@ -9,7 +9,11 @@ const userSchema = new Schema({
         unique: true,
         required: true
     },
-    password: String
+    password: String,
+
+    friends: [{
+        type: mongoose.Schema.Types.ObjectId, ref: 'user'
+    }]
 
 });
 

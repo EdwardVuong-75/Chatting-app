@@ -157,8 +157,42 @@ const rejectRequest = async(req, res) => {
 }
 
 const acceptRequest = async(req,res) => {
+   try {
+    const { requestId } = req.body;
 
-}
+    if (!requestId) {
+      return res.status(400).json({ error: "Request ID is required" });
+    }
+
+    const original = await Notification.findById(requestId);
+
+    if (!original) {
+      return res.status(404).json({ error: "Friend request not found" });
+    }
+
+    const senderId = original.sender;
+    const receiverId = original.receiver;
+
+
+    
+    // Add friends without duplicates
+    await User.findByIdAndUpdate(senderId, {
+      $addToSet: { friends: receiverId },
+    });
+    await User.findByIdAndUpdate(receiverId, {
+      $addToSet: { friends: senderId },
+    });
+
+    // Delete the pending request
+    await Notification.findByIdAndDelete(requestId);
+
+    // Optionally return updated friends list or a success message
+    res.status(200).json({ message: "Friend request accepted" });
+  } catch (error) {
+    console.error("Error accepting friend request:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
 
 module.exports = {sign_up, log_in, displayUsername, searchBar,
      addingFriend, getRequest, getSentRequests, rejectRequest,
