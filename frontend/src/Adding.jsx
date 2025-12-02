@@ -9,6 +9,7 @@ function AddingFriend() {
   const [search, setSearch] = useState('');
   const [msg, setMsg] = useState('');
   const [add, setAdd] = useState([]);
+  const [friend, setFriend] = useState([]);
 
   //displaying people in adding friend page
   useEffect(() => {
@@ -28,8 +29,17 @@ function AddingFriend() {
         'x-auth-token': token
        }
       });
+
+      const friendId = await axios.get("http://localhost:5000/api/user/GetFr",{
+        headers: {
+        'x-auth-token': token
+       }
+      });
+
         setName(res.data);
         setAdd(sentRes.data.map(r => r.receiver))
+        setFriend(friendId.data.map(fr => fr._id))
+
       }catch(err) 
        {
     console.log(err);
@@ -145,8 +155,11 @@ function AddingFriend() {
             <p className='userCard' key={u._id}>{u.name} ({u.email})
             <button className='adding-butt'
             onClick={() => handleSubmit(u._id)}
-            disabled = {add.includes(u._id)}
-            >{add.includes(u._id) ? 'Request sent' : 'Add'}</button>
+            disabled = {add.includes(u._id) || friend.includes(u._id)}
+            >{
+              friend.includes(u._id) ? 'Friend' :
+              add.includes(u._id) ? 'Request sent' : 'Add'}
+            </button>
             </p>
           ))}
         </div>)}

@@ -126,6 +126,7 @@ const getRequest = async(req, res) => {
     }
 }
 
+//display request as "added" untill other user accept
 const getSentRequests = async (req, res) => {
   try {
     const senderId = req.user.id;
@@ -183,6 +184,16 @@ const acceptRequest = async(req,res) => {
       $addToSet: { friends: senderId },
     });
 
+     const request = new Notification({
+        receiver: receiverId,
+        sender: senderId,
+        message: "Accepted friend request successfully",
+        type: "Friend request",
+        status: "accepted"
+    });
+
+    await request.save()
+
     // Delete the pending request
     await Notification.findByIdAndDelete(requestId);
 
@@ -194,6 +205,23 @@ const acceptRequest = async(req,res) => {
   }
 };
 
+const getFriendReq = async(req,res) => {
+    const friendId = req.user.id;
+    const requests = await User.findById(friendId).populate(
+        "friends", "name email"
+    )
+
+    try {
+        if(!requests)
+        {
+            return res.status(401).json({message: "No request"});
+        }
+        res.json(requests.friends)
+    } catch (error) {
+        res.status(500).json({error: "Something went wrong"});
+    }
+}
+
 module.exports = {sign_up, log_in, displayUsername, searchBar,
      addingFriend, getRequest, getSentRequests, rejectRequest,
-    acceptRequest};
+    acceptRequest, getFriendReq};
