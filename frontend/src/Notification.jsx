@@ -26,9 +26,31 @@ function Notification() {
     }
    
   };
-   fetchNotification();
+   fetchNotification();console.log("loaded a new message");
   }, []);
 
+  const rejectRequest = async(requestId) => {
+    const token = localStorage.getItem('token');
+    if(token)
+    {
+      try {
+         await axios.delete("http://localhost:5000/api/user/rejectRequest",
+          {
+            data: {requestId},
+            headers: {
+              "x-auth-token": token
+            }
+          }
+        );
+        setNotification(prev => prev.filter(req => req._id !== requestId));
+        console.log('Rejected')
+
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+  };
 
 
   return (
@@ -87,11 +109,13 @@ function Notification() {
     {notification.length === 0 ? (<p>No request</p>) : (
       <div>
         {notification.map(req => (
-          <p className='userCard' key={req._id}>{req.sender.name} ({req.sender.email})
+          <div className='userCard' key={req._id}>{req.sender.name} ({req.sender.email})
           <button className='accept-butt'> Accept
             </button>
-            <button className='reject-butt'>Reject 
-              </button></p>
+            <button className='reject-butt'
+            onClick={() => rejectRequest(req._id)}
+            >Reject 
+              </button></div>
         ))}
         </div>)}
     </div>

@@ -1,7 +1,7 @@
 const express = require('express');
 const protect = require('../middleware/authMiddleware');
 const {sign_up, log_in, displayUsername, searchBar, addingFriend, getRequest, 
-    getSentRequests, rejectRequest} = require('../controllers/userCon')
+    getSentRequests, rejectRequest, acceptRequest} = require('../controllers/userCon')
 
 const router = express.Router();
 
@@ -9,6 +9,7 @@ const router = express.Router();
 router.post('/SignUp',sign_up);
 router.post('/Login',log_in);
 router.post('/AddingFriend',protect, addingFriend);
+router.post('/AcceptRequest', protect, acceptRequest);
 
 //Get
 router.get('/Username', protect, displayUsername);

@@ -142,8 +142,24 @@ const getSentRequests = async (req, res) => {
 }
 
 const rejectRequest = async(req, res) => {
+    try {
+        const requestId = req.body.requestId;
+        const reject = await Notification.findByIdAndDelete(requestId);
+        
+        if(!requestId)
+        {
+            return res.status(404).json({error: "There is no notification"})
+        }
+        res.status(200).json(reject)
+    } catch (error) {
+        res.status(500).json({error: "Something went wrong"});
+    }
+}
+
+const acceptRequest = async(req,res) => {
 
 }
 
 module.exports = {sign_up, log_in, displayUsername, searchBar,
-     addingFriend, getRequest, getSentRequests, rejectRequest};
+     addingFriend, getRequest, getSentRequests, rejectRequest,
+    acceptRequest};
