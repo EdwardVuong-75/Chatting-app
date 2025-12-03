@@ -2,7 +2,7 @@ const express = require('express');
 const protect = require('../middleware/authMiddleware');
 const {sign_up, log_in, displayUsername, searchBar, addingFriend, getRequest, 
     getSentRequests, rejectRequest, acceptRequest,
-getFriendReq, sendMessage, getFriendName} = require('../controllers/userCon')
+getFriendReq, sendMessage, getFriendName, getMessage} = require('../controllers/userCon')
 
 const router = express.Router();
 
@@ -20,6 +20,7 @@ router.get('/GetRequest', protect, getRequest);
 router.get('/SentRequest', protect, getSentRequests);
 router.get('/GetFr',protect, getFriendReq);
 router.get('/GetFrName/:id',protect, getFriendName);
+router.get('/GetMessage/:id', protect, getMessage);
 
 //Delete
 router.delete('/rejectRequest', protect, rejectRequest);

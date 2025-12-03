@@ -7,6 +7,7 @@ function OpenChat()
     const { id } = useParams();
     const [text, setText] = useState('');
     const [friend, setFriend] = useState(null);
+    const [messages, setMessages] = useState([]);
 
     useEffect(() => {
       const fetchFriendName = async() => {
@@ -15,9 +16,17 @@ function OpenChat()
             {
               headers: {'x-auth-token' : token}
             }
-          )
+          );
+
+          const mesRes = await axios.get(`http://localhost:5000/api/user/GetMessage/${id}`,
+            {
+              headers: {"x-auth-token": token}
+            }
+          );
 
           setFriend(res.data)
+          setMessages(mesRes.data)
+          console.log('sent')
           
       
       }; fetchFriendName();
@@ -35,7 +44,15 @@ function OpenChat()
             headers: {'x-auth-token':token}
           }
         )
+
+         const mesRes = await axios.get(`http://localhost:5000/api/user/GetMessage/${id}`,
+            {
+              headers: {"x-auth-token": token}
+            }
+          );
+
         setText("")
+        setMessages(mesRes.data)
         console.log('sent');
 
       } catch (err) {
@@ -97,6 +114,14 @@ function OpenChat()
     </header>
              <div className="chat-content">
                 <p className="Fl">You are talking to {friend?.name || "Loading..."}</p>
+                <div>
+                  {messages.map(msg => (
+                    <p key={msg._id} className={msg.sender.toString() === id ? "friend-msg" : "my-msg"}>
+                      {msg.message}
+                    </p>
+                  )
+                )}
+                </div>
             </div>
 
             <div className="chat-input-container">

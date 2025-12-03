@@ -94,11 +94,15 @@ body {
   height: 80vh;           
   display: flex;
   flex-direction: column;
-}
+  border: 1px solid #ccc;
 
 .chat-content {
-  flex: 1;                 //push input to bottom
-  //padding-top: 80px;       /* prevents overlap with navbar */
+  flex: 1;                 
+  overflow-y: auto; /* scroll when messages overflow */
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .chat-input-container {
@@ -120,6 +124,24 @@ body {
   font-size: 18px;
 }
 
+.friend-msg{
+  align-self: flex-start;
+  max-width: 50%;
+  padding: 10px;
+  border-radius: 15px;
+  background: #e0e0e0;
+  word-wrap: break-word;
+}
+
+.my-msg{
+  margin-left: 650px;
+  max-width: 50%;
+  padding: 10px;
+  border-radius: 15px;
+  background: #a213a7ff;
+  color: white;
+  word-wrap: break-word;
+}
 
 
 

@@ -263,7 +263,27 @@ const sendMessage = async(req,res) => {
         }
     }
     
+    const getMessage = async(req,res) => {
+        try {
+            const userId = req.user.id;
+            const friendId = req.params.id;
+
+            const messages = await Chat.find({
+                $or: [
+                    {sender: userId, receiver: friendId},
+                    {sender: friendId, receiver: userId}
+                ]
+            })
+            if (!messages.length) {
+            return res.status(200).json([]);
+        }
+            res.status(200).json(messages)
+            
+        } catch (error) {
+            res.status(500).json({error: "Something went down"})
+        }
+    }
 
 module.exports = {sign_up, log_in, displayUsername, searchBar,
      addingFriend, getRequest, getSentRequests, rejectRequest,
-    acceptRequest, getFriendReq, sendMessage, getFriendName};
+    acceptRequest, getFriendReq, sendMessage, getFriendName, getMessage};

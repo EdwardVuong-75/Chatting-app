@@ -100,7 +100,7 @@ function Profile() {
     <div>{friend.length === 0 ? (<div>You have no contact.<br/> 
       <Link to='/Adding'>Let's connect</Link></div>) :
      (<div>{friend.map(u => (
-      <button className='userCard' onClick={() => nagivate(`/OpenChat/${u.name}`)}
+      <button className='userCard' onClick={() => nagivate(`/OpenChat/${u._id}`)}
        key={u._id}>{u.name} ({u.email})</button>
       
      ))}</div>)}</div>
