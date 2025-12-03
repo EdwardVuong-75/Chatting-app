@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import './Css/Navbar.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 function Profile() {
 
   const [name, setName] = useState('');
+  const [friend, setFriend] = useState([]);
 
   useEffect(() => {
     const fetchName = async () => {
@@ -18,7 +19,15 @@ function Profile() {
         'x-auth-token': token
        }
       });
+
+       const getFriend = await axios.get("http://localhost:5000/api/user/GetFr",{
+        headers: {
+        'x-auth-token': token
+       }
+      });
+
         setName(res.data.name);
+        setFriend(getFriend.data)
       }catch(err) 
        {
     console.log(err);
@@ -84,7 +93,14 @@ function Profile() {
       </nav>
     </header>
     <img className='profile-pic' src = {'./public/profile-pic.jpg'}/>
-    <p className='Username'>{name}</p>
+    <div className='Username'>{name}</div>
+    <p className='Fl'>Your friends: {friend.length}</p>
+    <div>{friend.length === 0 ? (<div>You have no contact.<br/> 
+      <Link to='/Adding'>Let's connect</Link></div>) :
+     (<div>{friend.map(u => (
+      <p className='userCard' key={u._id}>{u.name} ({u.email})</p>
+      
+     ))}</div>)}</div>
     </div>
   );
 }

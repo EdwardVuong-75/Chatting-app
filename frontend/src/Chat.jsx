@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 function Chat() {
 
-  const [name, setName] = useState('');
+  const [friend, setFriend] = useState([]);
 
   useEffect(() => {
     const fetchName = async () => {
@@ -13,12 +13,12 @@ function Chat() {
     if(token)
     {
       try {
-        const res = await axios.get("http://localhost:5000/api/user/Username",{
+        const res = await axios.get("http://localhost:5000/api/user/GetFr",{
         headers: {
         'x-auth-token': token
        }
       });
-        setName(res.data.name);
+        setFriend(res.data);
       }catch(err) 
        {
     console.log(err);
