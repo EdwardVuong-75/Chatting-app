@@ -1,40 +1,9 @@
-import { NavLink, Link, useNavigate } from 'react-router-dom';
-import './Css/Navbar.css';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-
-function Chat() {
-
-  const [friend, setFriend] = useState([]);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchName = async () => {
-    const token = localStorage.getItem('token');
-    if(token)
-    {
-      try {
-        const res = await axios.get("http://localhost:5000/api/user/GetFr",{
-        headers: {
-        'x-auth-token': token
-       }
-      });
-        setFriend(res.data);
-      }catch(err) 
-       {
-    console.log(err);
-      }
-    }
-   
-  };
-   fetchName();
-  }, []);
-
-
-
-  return (
-    <div>
-    <header className="navbar-container">
+import { NavLink } from "react-router-dom";
+function OpenChat()
+{   
+    return(
+        <div>
+             <header className="navbar-container">
       <nav aria-label="Global">
         <ul className="nav-links">
           <li>
@@ -84,19 +53,10 @@ function Chat() {
         </ul>
       </nav>
     </header>
-    <p>Your chat: {friend.length}</p>
-    <div>{friend.length === 0 ? (<p>No friend yet. <Link to="/Adding">Let's connect</Link></p>)
-     : (
-      <p>{friend.map(u => 
-        <button className='userCard'  key={u._id} onClick={() => navigate("/OpenChat")}>
-          {u.name} ({u.email})
-        </button>
-      )}</p>
-     )}
+            <p className="Fl">You are talking to </p>
+        </div>
+    );
 
-    </div>
-    </div>
-  );
-}
+};
 
-export default Chat;
+export default OpenChat;

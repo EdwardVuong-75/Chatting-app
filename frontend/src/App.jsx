@@ -8,6 +8,7 @@ import Profile from './Profile'
 import AddingFriend from './Adding'
 import Chat from './Chat'
 import Notification from './Notification'
+import OpenChat from './OpenChat'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Route path= '/Adding' element={<AddingFriend/>}/>
         <Route path= '/Chat' element={<Chat/>}/>
         <Route path= '/Notification' element={<Notification/>}/>
+        <Route path= '/OpenChat' element={<OpenChat/>}/>
       </Routes>
   )
 }
