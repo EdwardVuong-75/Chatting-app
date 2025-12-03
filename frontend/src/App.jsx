@@ -22,7 +22,7 @@ function App() {
         <Route path= '/Adding' element={<AddingFriend/>}/>
         <Route path= '/Chat' element={<Chat/>}/>
         <Route path= '/Notification' element={<Notification/>}/>
-        <Route path= '/OpenChat' element={<OpenChat/>}/>
+        <Route path= '/OpenChat/:id' element={<OpenChat/>}/>
       </Routes>
   )
 }

@@ -88,7 +88,7 @@ function Chat() {
     <div>{friend.length === 0 ? (<p>No friend yet. <Link to="/Adding">Let's connect</Link></p>)
      : (
       <p>{friend.map(u => 
-        <button className='userCard'  key={u._id} onClick={() => navigate("/OpenChat")}>
+        <button className='userCard'  key={u._id} onClick={() => navigate(`/OpenChat/${u.name}`)}>
           {u.name} ({u.email})
         </button>
       )}</p>

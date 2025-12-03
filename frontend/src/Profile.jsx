@@ -1,4 +1,4 @@
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import './Css/Navbar.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -7,6 +7,8 @@ function Profile() {
 
   const [name, setName] = useState('');
   const [friend, setFriend] = useState([]);
+
+  const nagivate = useNavigate();
 
   useEffect(() => {
     const fetchName = async () => {
@@ -98,7 +100,8 @@ function Profile() {
     <div>{friend.length === 0 ? (<div>You have no contact.<br/> 
       <Link to='/Adding'>Let's connect</Link></div>) :
      (<div>{friend.map(u => (
-      <p className='userCard' key={u._id}>{u.name} ({u.email})</p>
+      <button className='userCard' onClick={() => nagivate(`/OpenChat/${u.name}`)}
+       key={u._id}>{u.name} ({u.email})</button>
       
      ))}</div>)}</div>
     </div>

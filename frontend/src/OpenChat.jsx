@@ -1,8 +1,10 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 function OpenChat()
 {   
+    const { id } = useParams();
+
     return(
-        <div>
+        <div className="chat-container">
              <header className="navbar-container">
       <nav aria-label="Global">
         <ul className="nav-links">
@@ -53,7 +55,13 @@ function OpenChat()
         </ul>
       </nav>
     </header>
-            <p className="Fl">You are talking to </p>
+             <div className="chat-content">
+                <p className="Fl">You are talking to {id}</p>
+            </div>
+
+            <div className="chat-input-container">
+                <input className="Chat-input" placeholder="Type here"/>
+            </div>
         </div>
     );
 
