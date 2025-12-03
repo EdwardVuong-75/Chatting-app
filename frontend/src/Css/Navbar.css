@@ -91,13 +91,13 @@ body {
 }
 
 .chat-container {
-  height: 80vh;           /* full screen */
+  height: 80vh;           
   display: flex;
   flex-direction: column;
 }
 
 .chat-content {
-  flex: 1;                 /* push input to bottom */
+  flex: 1;                 //push input to bottom
   //padding-top: 80px;       /* prevents overlap with navbar */
 }
 
@@ -109,6 +109,13 @@ body {
 
 .Chat-input {
   width: 80%;
+  padding: 12px;
+  font-size: 18px;
+}
+
+.send-button
+{
+  background-color: #154dbdff;
   padding: 12px;
   font-size: 18px;
 }

@@ -3,6 +3,7 @@ const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Notification = require('../models/requestModel');
+const Chat = require('../models/chatModel');
 
 const sign_up =  async (req, res) => {
     try{
@@ -220,8 +221,49 @@ const getFriendReq = async(req,res) => {
     } catch (error) {
         res.status(500).json({error: "Something went wrong"});
     }
+
 }
+
+const sendMessage = async(req,res) => {
+        try {
+        const sender = req.user.id;
+        const { receiverId, message } = req.body;
+
+            if (!receiverId || !message)
+            {
+                return res.status(400).json({error: "no user"});
+            }
+            const chat = new Chat({
+                receiver: receiverId,
+                sender: sender,
+                message: message,
+            });
+
+            await chat.save();
+
+            res.status(200).json({ message: "Message sent", data: chat });
+            
+        } catch (error) {
+            console.error("Send message error:", error);
+            res.status(500).json({error: "Something went down"})
+        }
+    }
+
+    //get friend name in each chat log
+    const getFriendName = async(req,res) => {
+        try {
+            const user = await User.findById(req.params.id).select("name email");
+            if(!user)
+            {
+                return res.status(404).json({error: "User not found"});
+            }
+            res.status(200).json(user);
+        } catch (error) {
+            res.status(500).json({error: "Something went wrong"})
+        }
+    }
+    
 
 module.exports = {sign_up, log_in, displayUsername, searchBar,
      addingFriend, getRequest, getSentRequests, rejectRequest,
-    acceptRequest, getFriendReq};
+    acceptRequest, getFriendReq, sendMessage, getFriendName};
