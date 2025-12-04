@@ -103,7 +103,7 @@ body {
   padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  //gap: 10px;
 }
 
 .chat-input-container {
@@ -132,6 +132,8 @@ body {
   border-radius: 15px;
   background: #e0e0e0;
   word-wrap: break-word;
+    margin: 0; 
+  margin-bottom: 2px;
 }
 
 .my-msg{
@@ -142,6 +144,8 @@ body {
   background: #a213a7ff;
   color: white;
   word-wrap: break-word;
+    margin: 0; 
+  margin-bottom: 2px;
 }
 
 
