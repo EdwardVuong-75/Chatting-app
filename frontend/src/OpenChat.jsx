@@ -24,12 +24,17 @@ function OpenChat()
             }
           );
 
+          
+
           setFriend(res.data)
           setMessages(mesRes.data)
           console.log('sent')
           
       
       }; fetchFriendName();
+      //fetch after every 1 second
+      const interval = setInterval(fetchFriendName, 1000);
+      return () => clearInterval(interval);
     }, [id]);
 
 
