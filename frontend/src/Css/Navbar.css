@@ -95,6 +95,7 @@ body {
   display: flex;
   flex-direction: column;
   border: 1px solid #ccc;
+}
 
 .chat-content {
   flex: 1;                 
@@ -134,7 +135,7 @@ body {
 }
 
 .my-msg{
-  margin-left: 650px;
+   align-self: flex-end;
   max-width: 50%;
   padding: 10px;
   border-radius: 15px;
@@ -142,9 +143,6 @@ body {
   color: white;
   word-wrap: break-word;
 }
-
-
-
 
 
 

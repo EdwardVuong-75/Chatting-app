@@ -114,14 +114,12 @@ function OpenChat()
     </header>
              <div className="chat-content">
                 <p className="Fl">You are talking to {friend?.name || "Loading..."}</p>
-                <div>
                   {messages.map(msg => (
                     <p key={msg._id} className={msg.sender.toString() === id ? "friend-msg" : "my-msg"}>
                       {msg.message}
                     </p>
                   )
                 )}
-                </div>
             </div>
 
             <div className="chat-input-container">
