@@ -1,4 +1,7 @@
+# Left out of the image build. Dependencies are installed inside the image.
 node_modules
+# Vite build output. The container runs the dev server instead.
 dist
 npm-debug.log
+# Secrets stay on the host and are not copied into the image.
 .env

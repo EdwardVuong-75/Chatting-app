@@ -1,10 +1,18 @@
+# Starts the whole app: database, API, and React dev server.
+# From this folder: docker compose up --build
+# Then open http://localhost:5173
 services:
+  # Official MongoDB 7 image. Not built from this repo.
+  # Stores users, friends, and messages.
   mongo:
     image: mongo:7
+    # Host port 27017 -> container port 27017.
     ports:
       - "27017:27017"
+    # Keep database files in a named volume so they survive container restarts.
     volumes:
       - mongo-data:/data/db
+    # Backend waits until this check passes before it starts.
     healthcheck:
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 5s
@@ -12,27 +20,35 @@ services:
       retries: 10
       start_period: 10s
 
+  # Built from backend/Dockerfile. The React app calls this API at localhost:5000.
   backend:
     build: ./backend
     ports:
       - "5000:5000"
     environment:
       PORT: 5000
+      # Hostname "mongo" is the database service above, not localhost.
       MONGO_URI: mongodb://mongo:27017/chatting
+      # Uses JWT_SECRET from the shell if set; otherwise a local-only default.
       JWT_SECRET: ${JWT_SECRET:-dev-only-change-me}
     volumes:
+      # Live-edit backend files on the host without rebuilding the image.
       - ./backend:/app
+      # Keep Linux node_modules from the image; do not replace them with the Windows folder.
       - backend-node-modules:/app/node_modules
+    # Restart the API when server files change. --legacy-watch works with the mounted folder.
     command: npx nodemon --legacy-watch server.js
     depends_on:
       mongo:
         condition: service_healthy
 
+  # Built from frontend/Dockerfile. Serves the login page and the rest of the UI.
   frontend:
     build: ./frontend
     ports:
       - "5173:5173"
     environment:
+      # vite.config.js uses this to listen on all interfaces and poll for file changes.
       DOCKER: "1"
     volumes:
       - ./frontend:/app
@@ -40,6 +56,7 @@ services:
     depends_on:
       - backend
 
+# Named volumes created by Docker and reused on the next "docker compose up".
 volumes:
   mongo-data:
   backend-node-modules:
